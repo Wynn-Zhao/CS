@@ -1,0 +1,6 @@
+
+/* Descendat items */
+/* ol > li > img = ol img */
+ol > li > img {
+    size: 10px;
+}

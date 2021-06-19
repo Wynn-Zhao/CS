@@ -1,0 +1,45 @@
+table{
+    color:chartreuse;
+    text-align: center;
+    font-size: large;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+/* Class */
+.BigBlue{
+    font-size: 20px;
+    color: blue;
+}
+
+/* id */
+#CenterFonted{
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.Center{
+    text-align: center;
+}
+
+.TopRight{
+    text-align: right;
+    color: rgb(29, 29, 29);
+    font-size: 14px;
+
+    /* Not Done Yet */
+}
+
+.TopLeft{
+    text-align: left;
+    color: rgb(29, 29, 29);
+    font-size: 14px;
+    /* Not Done Yet */
+}
+
+.bigInput{
+    line-height: 2em;
+}
+
+.img-container{
+    text-align: center;
+}
