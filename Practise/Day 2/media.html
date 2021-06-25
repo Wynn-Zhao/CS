@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <title>
+      Media Queries Example Website
+    </title>
+
+    <style>
+      div{
+        background-color: yellow;
+      }
+
+      @media (min-width: 600px){
+        /* styling for laptops!!!!! */
+        #smartphone{
+          display:none;
+        }
+      }
+
+      @media (max-width: 600px){
+        /* smartphone only!!! */
+        #laptop{
+          display:none;
+        }
+      }
+
+    </style>
+
+  </head>
+
+  <body>
+    <div>
+      <p id = "laptop">
+        We like your laptop!
+      </p>
+
+      <p id = "smartphone">
+        We like your smartphone!
+      </p>
+
+    </div>
+  </body>
+
+</html>

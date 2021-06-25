@@ -1,0 +1,13 @@
+.center{
+    text-align: center;
+}
+
+img[src = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Trader_Joes_Logo.svg/1280px-Trader_Joes_Logo.svg.png"]{
+    background-color: white;
+}
+
+body h1 {
+    background-color: rgb(248, 246, 101);
+    color: red;
+}
+

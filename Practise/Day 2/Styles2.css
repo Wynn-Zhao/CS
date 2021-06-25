@@ -1,6 +1,37 @@
-
 /* Descendat items */
 /* ol > li > img = ol img */
 ol > li > img {
     size: 10px;
+}
+
+body{
+    background-color: salmon;
+}
+
+a{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#google{
+    color: yellow;
+}
+
+
+a[href = "https://www.google.com/"]{
+    color: yellow;
+}
+a[href = "https://www.facebook.com/"]{
+    color:blue;
+}
+a[href = "https://www.netflix.com/"]{
+    color: red;
+}
+a[href = "https://www.youtube.com/"]{
+    color: red;
+}
+a[href = "https://www.amazon.com/"]{
+    color: orange;
+}
+a:visited{
+    color: black;
 }
