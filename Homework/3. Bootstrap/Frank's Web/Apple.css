@@ -1,0 +1,79 @@
+.bigtitle{
+    text-align:center;
+    color:white;
+    font-size:80pt ;
+}
+
+.NewProducts{
+    color:white;
+    font-size:40pt;
+    position: absolute;
+    left:300px;
+}
+
+.AppleSupport{
+    color:white;
+    font-size:40pt;
+    position: absolute;
+    left:800px;
+}
+.Account{
+    color:white;
+    font-size:40pt;
+    position: absolute;
+    left:300px;
+}
+
+.Education{
+    color:white;
+    font-size:40pt;
+    position: absolute;
+    left:800px;
+}
+.middletitle{
+    text-align: center;
+    color:white;
+    font-size:50pt;
+}
+
+.input{
+    position:absolute;
+    top:40px;
+    right:150px;
+    width: 100pt;
+    height: 20pt;
+}
+
+.login{
+    position:absolute;
+    top:23px;
+    right:40px;
+    color:white;
+}
+.list{
+    position:fixed;
+    color:white;
+    left:40px;
+    font-size:15pt;
+
+}
+#head{
+    font-size:25pt;
+}
+
+a:visited{
+    color: white;
+}
+.iphone{
+    text-align: center;
+    color:gold;
+    font-size:15pt;
+}
+
+html {
+    height: 100%;
+    }
+    body {
+    background-image: linear-gradient(to bottom right, #33475b, #0033CC, #FF77CC, rgb(255, 122, 89));
+    background-attachment:fixed ;
+    }
