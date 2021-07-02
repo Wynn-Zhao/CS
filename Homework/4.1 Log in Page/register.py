@@ -20,7 +20,7 @@ def main():
     repassword = input("Re-enter Your Register Password: ")
 
     while password != repassword:
-        print("Password doesn't match")
+        print("Come on! Password doesn't match")
         password = input("Register Passord Again: ")
         repassword = input("Re-enter Your Register Password Again: ")
 
