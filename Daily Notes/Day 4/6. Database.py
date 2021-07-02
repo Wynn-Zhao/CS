@@ -10,13 +10,13 @@ with open('4. Students.csv') as file:
 print(data)
 
 
-with open('students_more.csv', 'w') as file:
+with open('students_more.csv') as file:
     csv_writer = csv.writer(file, delimiter = ',')
-    first = True
+    first_row = True
     for row in data:
-        if first:
+        if first_row:
             csv_writer.writerow(row+['Sport'])
-            first = False
+            first_row = False
         else:
             if (int(row[2])%2==0):
                 csv_writer.writerow(row+['Soccer'])
