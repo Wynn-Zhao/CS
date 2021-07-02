@@ -1,5 +1,6 @@
 import csv
 from csv import writer
+import main
 
 def main():
     check = []
@@ -31,7 +32,13 @@ def main():
             csv_writer = writer(file) # Create a writer object from csv module
             csv_writer.writerow(data) # Add contents of list as last row in the csv file
         print("Register succeed, congratulations!")
+        print('-------------')
     register(data)
+
+    if input('Type "yes: if you want to start the program again: ') == 'yes':
+        main.main()
+    else:
+        print('Exiting system, good luck!')
 
 if __name__ == '__main__':
     main()
