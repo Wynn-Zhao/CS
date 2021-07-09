@@ -8,6 +8,7 @@ def main():
     if input('Type "yes" if you want to register new account: ') == 'yes':
         print("Welcome to register page!")
         register.main()
+        print('Okay, welcome to login page!')
     else:
         print('Alright')
     if input('Type "yes" if you want to login: ') == 'yes':

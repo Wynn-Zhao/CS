@@ -29,20 +29,21 @@ def main():
         for info in users:
             if info[0] == check[0]:
                 wrong_name = False
+                break
             else:
                 wrong_name = True
             if info[1] == check[1]:
                 wrong_password = False
+                break
             else:
                 wrong_password = True
         if wrong_name and wrong_password:
             print("Come on! Account doesn't exist at first place")
             if input('Do you want to register? Type "yes" if you want: ') == 'yes':
                 register.main()
+                print('Exiting system')
             else:
                 print('Sure, exiting system.')
-        elif wrong_name:
-            print("Wrong user name, how dare you?")
         elif wrong_password:
             print("Wrong password, why don't you memerize it correctly?")
             print(":(")
