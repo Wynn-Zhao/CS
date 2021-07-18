@@ -1,0 +1,27 @@
+<html>
+    <head>
+        
+    <head>
+    <body>
+        <table>
+            <thead>
+                <tr>
+                    <td> fname </td>
+                    <td> lname </td>
+                    <td> nname </td>
+                    <td> email </td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{user.fname}}</td>
+                        <td>{{user.lname}}</td>
+                        <td>{{user.nname}}</td>
+                        <td>{{user.email}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        <table>
+    </body>
+</html>

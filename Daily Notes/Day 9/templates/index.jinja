@@ -1,0 +1,29 @@
+{% extends 'base.jinja' %}
+
+{% block title %}Twitter Clone{% endblock %}
+
+{% block body %}
+<img src = "{{url_for('static', filename = 'img/logo.jpg')}}">
+<div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Register</h5>
+                <p class="card-text">Create a new account and start twiting!.</p>
+                <a href="{{url_for('register')}}" class="btn btn-primary">Register</a>
+            </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Login</h5>
+                <p class="card-text">Enter your account info and start twting!.</p>
+                <a href="{{url_for('login')}}" class="btn btn-primary">Login</a>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

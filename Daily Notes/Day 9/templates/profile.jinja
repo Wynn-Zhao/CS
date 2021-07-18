@@ -1,0 +1,29 @@
+{% extends 'base.jinja' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+
+
+
+    <div class="card">
+        <h5 class="card-header">Username: {{session.get('user')[0]}}</h5>
+        <div class="card-body">
+            <h5 class="card-title">Name: {{session.get('user')[1]}} {{session.get('user')[2]}}</h5>
+        </div>
+    </div>
+    <div class="input-group mb-3">
+    <form method = "post">
+        <input type="text" class="form-control" placeholder="Twit content" aria-label="Recipient's username" name = "content" aria-describedby="button-addon2">
+        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Post</button>
+    </form>
+</div>
+
+
+    {% for twit in twits %}
+        <div class="alert alert-info" role="alert">
+            {{twit.content}}
+        </div>
+    {% endfor %}
+    
+{% endblock %}

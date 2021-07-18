@@ -14,7 +14,7 @@ def main():
     login = True
     index = 0
     wrong_name = False
-    wrong_password = False 
+    wrong_password = False
 
     for info in users:
         if info[0] == check[0] and info[1] == check[1]:
@@ -156,12 +156,13 @@ def main():
                 users[index].append(new_friend) 
                 if new_friend == users[index][0]:
                     print('Congratulations! You are now friends with yourself!')
-                    print('------------')
                 else:
                     print('Congratulations! You are now friends with ' + str(new_friend))
-                    print('------------')
 
             # if input('Type "yes" if you want to check money of your friends') == 'yes':
+
+            # else:
+            #     print("Sure.")
         print('------------')
                 
 

@@ -1,0 +1,24 @@
+{% extends 'base.jinja' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+
+
+
+    <div class="card">
+        <h5 class="card-header">Username: {{user.username}}</h5>
+        <div class="card-body">
+            <h5 class="card-title">Name: {{user.first_name}} {{user.last_name}}</h5>
+        </div>
+    </div>
+    
+
+
+    {% for twit in twits %}
+        <div class="alert alert-info" role="alert">
+            {{twit.content}}
+        </div>
+    {% endfor %}
+    
+{% endblock %}

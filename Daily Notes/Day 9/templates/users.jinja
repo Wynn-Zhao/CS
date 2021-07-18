@@ -1,0 +1,31 @@
+{% extends 'base.jinja' %}
+
+{% block title %}Users{% endblock %}
+
+{% block body %}
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Username</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                {% if user.username != session.get('user')[0] %}
+                    <tr>
+                        <th scope="row">{{user.username}}</th>
+                        <td>{{user.first_name}}</td>
+                        <td>{{user.last_name}}</td>
+                        <td><a href = "{{url_for('user', username = user.username)}}" class = "btn btn-info">Open profile</a></td>
+                    </tr>
+                {% endif %}
+
+            {% endfor %}
+            
+        
+        </tbody>
+    </table>
+{% endblock %}

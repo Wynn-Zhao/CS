@@ -16,7 +16,6 @@ class Card:
             card = 'Q'
         if (self.value == 11):
             card = 'J'
-
         return card+signs[self.type]
 
     def __repr__(self):
@@ -30,7 +29,6 @@ class Card:
             card = 'Q'
         if (self.value == 11):
             card = 'J'
-
         return card+signs[self.type]
 
 class Deck:
@@ -45,8 +43,7 @@ class Deck:
 
     def deal(self):
         top = self.cards[0]
-        # What is the following line doing? Why?
-        self.cards.pop(0) 
+        self.cards.pop(0)
         return top
 
 class Player:
@@ -68,46 +65,46 @@ class Game:
         self.player.cards = []
         self.player.money -= 100
         self.deck.shuffle()
-        print(' Welcome to the game! ')
 
 
     def turn(self):
         card = self.deck.deal()
         self.player.add_card(card)
 
-        print('Your cards: ' + str(self.player.cards))
-
         if (self.player.get_sum() > 21):
             return False
         elif (self.player.get_sum() <= 21):
             return True
+
+    def return_card(self):
+        return self.player.cards
         
     
-    def stop(self):
-        s = self.player.get_sum()
-        payoff = 0
-        if (s>21):
-            payoff = -200
-        if (s==21):
-            payoff = 500
-        elif (s==20):
-            payoff = 300
-        elif (s==19):
-            payoff = 200
-        elif (s==18):
-            payoff = 150
-        elif (s==17):
-            payoff = 50
-        elif (s==16):
-            payoff = 10
-        elif (s==15):
-            payoff = -10
-        elif (s==14):
-            payoff = -50
-        elif (s==13):
-            payoff = -100
+    # def stop(self):
+    #     s = self.player.get_sum()
+    #     payoff = 0
+    #     if (s>21):
+    #         payoff = -200
+    #     if (s==21):
+    #         payoff = 500
+    #     elif (s==20):
+    #         payoff = 300
+    #     elif (s==19):
+    #         payoff = 200
+    #     elif (s==18):
+    #         payoff = 150
+    #     elif (s==17):
+    #         payoff = 50
+    #     elif (s==16):
+    #         payoff = 10
+    #     elif (s==15):
+    #         payoff = -10
+    #     elif (s==14):
+    #         payoff = -50
+    #     elif (s==13):
+    #         payoff = -100
 
         
-        self.player.money += payoff
+    #     self.player.money += payoff
         
-        return payoff
+    #     return payoff

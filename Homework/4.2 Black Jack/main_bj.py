@@ -8,11 +8,11 @@ from black_jack import Card, Deck, Player, Game
 # they get $50 if sum = 17
 # they get $10 if sum = 16
 
-
+ 
 
 def main():
     player = Player('Daniyar')
-    new_game = True
+    new_game = True 
 
     while (new_game):
         game = Game(player) 

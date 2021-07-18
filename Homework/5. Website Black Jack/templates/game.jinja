@@ -1,0 +1,28 @@
+{% extends 'base.jinja' %}
+
+{% block title %} Gamming Page {% endblock %}
+
+
+{% block body %}
+
+    <h2> Welcome to Gamming Page</h2>
+    </br></br></br>
+    <h3>
+    Your cards: {{session.get('cards')}}
+    </h3>
+    </br></br>
+    <p>Type "yes" if you want to add card, or type anything else if not</p>
+    <div class="col-8">
+        <form class="row g-3" method = "post">
+            <div class="col-auto">
+                <label for="password" class="visually-hidden">decision</label>
+                <input type="text" class="form-control" id="text" name = "answer" placeholder="your decision">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary mb-3">Submit</button>
+            </div>
+        </form>
+    </div>
+    
+
+{% endblock %}
