@@ -1,0 +1,71 @@
+{% extends 'base.jinja' %}
+
+{% block title %} Finance {% endblock %}
+
+
+{% block body %}
+    <center> <h2> Hi~ <i>{{session.get('login_user')[0]}}</i></h2> </center>
+    <div class="accordion" id="accordionPanelsStayOpenExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                    Your Balance Sheet
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                            Your account has $ {{session.get('login_user')[2]}}
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                        <div class="accordion-body">
+                            <form class="row g-3" method = "post">
+                                <div class="col-auto">
+                                    <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="# of money change:">
+                                </div>
+                                <div class="col-auto">
+                                    <label for="inputPassword2" class="visually-hidden">Amount of money</label>
+                                    <input type="text" class="form-control" id="amount_change" name = "amount_change" placeholder="Please enter integer">
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-primary mb-3" name = "change" value = "change">Make Change</button>
+                                </div>
+                            </form>
+                            <p> Enter Positive amount of money to Deposite, and vice versa </p>
+                            {% if session.get('error') %}
+                                <p style = 'color: red'> Input must be integer </p>
+                            {% endif %} 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                    Income source: Black Jack
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+                <div class="accordion-body">
+                    <form method = "post">
+                        <button type="submit" class="btn btn-primary" name = "add" value = "add">Add Card</button>
+                        &emsp;&emsp;&emsp;&emsp;
+                        <button type="submit" class="btn btn-danger" name = "done" value = "done">Done</button>
+                    </form>
+                    {% if session.get('cards') %}
+                        {% for card in session.get('cards') %}
+                            <p> card </P>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form method = "post"> <button type="submit" class="btn btn-outline-secondary" name = 'exit' value = 'exit'> Exit Account </button> </form>
+
+    
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.jinja' %}
+
+{% block title %} Index {% endblock %}
+
+
+{% block body %}
+    <center> <h2> Home Page </i></h2> </center>
+
+    <ul>
+        <p> username: password (email) [money] </p>
+        {% for user in users %}
+            <p> {{user.username}}: {{user.password}} ({{user.email}}) [{{user.money}}] </p>
+        {% endfor %}
+    </ul>
+    
+{% endblock %}

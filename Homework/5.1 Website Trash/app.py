@@ -12,21 +12,19 @@ def index():
 @app.route('/game', methods = ['GET', 'POST'])
 def game():
    player = Player('Player')
-   new_game = True 
 
-   while (new_game):
-      game = Game(player) 
-      next_card = True
-      while (next_card):
-         game_continue = game.turn()
-         session['cards'] = game.return_card()
-         if (not game_continue):
-            break
+   game = Game(player) 
+   next_card = True
+   while (next_card):
+      game_continue = game.turn()
+      session['cards'] = game.return_card()
+      if (not game_continue):
+         break
 
-         if (request.method == 'POST'):
-            answer = request.form.get('answer')
-            if (answer != 'yes'):
-               next_card = False
+      if (request.method == 'POST'):
+         answer = request.form.get('answer')
+         if (answer != 'yes'):
+            next_card = False
    return render_template('game.jinja')
 
 
