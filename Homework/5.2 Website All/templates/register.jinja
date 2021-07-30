@@ -4,18 +4,20 @@
 
 
 {% block body %}
-    <center> <h2> Welcome to Register Page </i></h2> </center>
-    {% if session.get('ans') %}
-        <p style = 'color: red'> {{session.get('ans')}} </p>
-    {% endif %} 
+    <center> 
+        <h2> Welcome to Register Page </i></h2> 
+        {% if session.get('ans') %}
+            <p style = 'color: red'> {{session.get('ans')}} </p>
+        {% endif %} 
 
-    <form method = "post">
-        <input type = "text" name = "username" id = "username" placeholder = "Username">
-        <input type = "password" name = "password" id = "password" placeholder = "Password">
-        <input type = "password" name = "repassword" id = "repassword" placceholder = "Re-enter Password">
-        <input type = "text" name = "email" id = "email" placeholder = "Email">
-        <input type = "submit" value = "Register">
-    </form>
+        <form method = "post">
+            <input type = "text" name = "username" id = "username" placeholder = "Username">
+            <input type = "password" name = "password" id = "password" placeholder = "Password">
+            <input type = "password" name = "repassword" id = "repassword" placeholder = "Re-enter Password">
+            <input type = "text" name = "email" id = "email" placeholder = "Email">
+            <input type = "submit" value = "Register">
+        </form>
+    </center>
 
         
     

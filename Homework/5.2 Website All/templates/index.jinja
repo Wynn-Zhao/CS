@@ -7,9 +7,9 @@
     <center> <h2> Home Page </i></h2> </center>
 
     <ul>
-        <p> username: password (email) [money] </p>
+        <p> username: password (email) [money] stocks </p>
         {% for user in users %}
-            <p> {{user.username}}: {{user.password}} ({{user.email}}) [{{user.money}}] </p>
+            <p> {{user.username}}: {{user.password}} ({{user.email}}) [{{user.money}}] {{user.stocks}}</p>
         {% endfor %}
     </ul>
     

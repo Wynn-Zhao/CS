@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
-from Black_Jack import Card, Deck, Player, Game
-import json
+import random
 
 
 app = Flask(__name__)
@@ -15,7 +14,8 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    money = db.Column(db.Integer)
+    money = db.Column(db.Float)
+    stocks = db.Column(db.String(120))
 
     def __repr__(self):
         return 'User: {}'.format(self.username)
@@ -27,7 +27,7 @@ class User(db.Model):
         users = User.query.all()
         for user in users:
             if user.username == username:
-                ans = [user.username, user.password, user.email, user.money]
+                ans = [user.username, user.password, user.email, user.money, user.stocks]
                 return ans
 
 @app.route('/', methods = ['POST', 'GET'])
@@ -39,6 +39,8 @@ def index():
 
 @app.route('/register', methods = ['POST', 'GET'])
 def register():
+    if (session.get('login_user')):
+        return redirect(url_for('profile'))
     if (request.method == 'POST'):
         username = request.form.get('username')
         password = request.form.get('password')
@@ -72,7 +74,7 @@ def register():
                     elif blank:
                         session['ans'] = "Existing username AND you shouldn't leave anything blank"
                     elif not_match:
-                        session['ans'] = "Password doesn't match AND you shouldn't leave anything blank"
+                        session['ans'] = "Existing username AND you shouldn't leave anything blank"
                     else:
                         session['ans'] = 'Existing username'
                 if user.email == email:
@@ -97,11 +99,10 @@ def register():
         if check:
             return redirect(url_for('register'))
         else:
-            user = User(username = username, password = password, email = email, money = 0)
+            user = User(username = username, password = password, email = email, money = 0, stocks = '')
             db.session.add(user)
             db.session.commit()
             session.pop('ans', None)
-            session.pop('login_user, None')
             return redirect(url_for('login'))
     return render_template('register.jinja')
 
@@ -115,13 +116,13 @@ def login():
         password = request.form.get('password')
         user = User.get_by_username(username)
         if (not user):
-            render_template('login.jinja')
+            return render_template('login.jinja', message = 'Username does not exist!')
         else:
             if (password == user[1]):
-                session['login_user'] = [user[0], user[2], user[3]]
+                session['login_user'] = [user[0], user[2], user[3], user[4]]
                 return redirect(url_for('profile'))
             else:
-                return redirect(url_for('login'))
+                return render_template('login.jinja', message = 'Password does not match!')
     return render_template('login.jinja')
 
 
@@ -129,29 +130,105 @@ def login():
 def profile():
     if (not session.get('login_user')):
         return redirect(url_for('index'))
+    user = User.query.filter_by(username = session.get('login_user')[0]).first()
+    session['login_user'] = [user.id, user.username, user.money, user.stocks]
+    n = 0
+    message_2 = ''
+    stocks_info = {}
+
+    if not session.get('login_user')[3]:
+        message_2 = "You don't have any stock in hand"
+    else:
+        x = session.get('login_user')[3].split('!@#$%')
+        y = len(x) - 1
+        n = int(y/2)
+        session['stocks_name'] = []
+        session['stocks_shares'] = []
+        for i in range(y):
+            if i%2 == 0:
+                session.get('stocks_name').append(x[i])
+            else:
+                session.get('stocks_shares').append(x[i])
+        for i in range(n):
+            stocks_info[session.get('stocks_name')[i]] = float(session.get('stocks_shares')[i])
+
     if (request.method == 'POST'):
-        player = Player()
-        game = Game(player)
-        # TODO: the following function doesn't work
         if request.form.get('change'):
             change = request.form.get('amount_change')
             try:
                 user = User.query.filter_by(username = session.get('login_user')[0]).first()
-                user.money += int(change)
-                session.commit()
+                if float(change) < 0 and user.money < 0 - float(change):
+                    return render_template('profile.jinja', message_1 = "You know you don't have this much money in your account?", n = n)
+                else:
+                    user.money += float(change)
+                    db.session.commit()
+                    session.get('login_user')[2] = user.money
             except:
-                session['error'] = 'Input must be integer'
-                return redirect(url_for('profile'))
+                return render_template('profile.jinja', message_1 = 'Input must be a number!', n = n)
+
+        if request.form.get('search'):
+            lnkd = request.form.get('LNKD')
+            if len(lnkd) != 4:
+                return render_template('profile.jinja', message_3 = 'LNKD symbol must be 4 characters', n = n)
+            else:
+                price = random.randint(1, 100)
+                return render_template('profile.jinja', message_3 = 'Price for ' + str(lnkd) + ': ', message_3_1 = str(price), n = n)
+
+        if request.form.get('buy'):
+            lnkd_buy = request.form.get('LNKD_buy')
+            shares_buy = request.form.get('shares_buy')
+            try:
+                float(shares_buy)
+            except:
+                return render_template('profile.jinja', message_4 = 'The amount money invested must be a positive number', n = n)
+            if len(lnkd_buy) != 4:
+                return render_template('profile.jinja', message_4 = 'LNKD symbol must be 4 characters', n = n)
+            elif float(shares_buy) <= 0:
+                return render_template('profile.jinja', message_4 = 'The amount money invested must be a positive number', n = n)
+            elif float(shares_buy) > session.get('login_user')[2]:
+                return render_template('profile.jinja', message_4 = 'You are too poor to afford this investment', n = n)
+            else:
+                shares_buy = float(shares_buy)
+                price = random.randint(1, 100)
+                shares = shares_buy / price
+                user = User.query.filter_by(username = session.get('login_user')[0]).first()
+                user.money -= shares_buy
+                session.get('login_user')[2] = user.money
+                check_1 = False
+                for i in stocks_info:
+                    if i == lnkd_buy:
+                        check_1 = True
+                        break
+                if check_1:
+                    user.stocks = ''
+                    session['stocks_name'] = []
+                    session['stocks_shares'] = []
+                    stocks_info[lnkd_buy] += shares
+                    for i in stocks_info:
+                        session.get('stocks_name').append(i)
+                        session.get('stocks_shares').append(stocks_info[i])
+                        user.stocks += str(i) + '!@#$%' + str(stocks_info[i]) + '!@#$%'
+                        session.get('login_user')[3] = user.stocks
+                        db.session.commit()
+                else:
+                    user.stocks += str(lnkd_buy) + '!@#$%' + str(shares) + '!@#$%'
+                    db.session.commit()
+                    session.get('login_user')[3] = user.stocks
+                    n += 1
+                    session.get('stocks_name').append(lnkd_buy)
+                    session.get('stocks_shares').append(shares)
+                    stocks_info[lnkd_buy] = float(shares)
+                return render_template('profile.jinja', message_4 = str(price), message_4_1 = str(shares), message_4_2 = str(lnkd_buy), n = n)
+
+
         elif request.form.get('exit'):
             session.pop('login_user', None)
             return redirect(url_for('login'))
-        elif request.form.get('add'):
-            session["cards"] = game.turn()
-        # elif request.form.get('done'):
-         
-    return render_template('profile.jinja')
+
+    return render_template('profile.jinja', message_2 = message_2, n = n)
 
 
-# db.create_all() : Delete after first time use
+
 if __name__ == '__main__':
+    # db.create_all()
     app.run()
