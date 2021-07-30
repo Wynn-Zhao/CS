@@ -85,7 +85,7 @@
                     <tbody>
                         {% for i in range(0, n) %}
                             <tr>
-                            <th scope="row"> {{i}} </th>
+                            <th scope="row"> {{i+1}} </th>
                             <td>{{session.get('stocks_name')[i]}}</td>
                             <td>{{session.get('stocks_shares')[i]}}</td>
                             </tr>

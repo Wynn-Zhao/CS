@@ -2,6 +2,9 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
 import random
 
+# week password
+# 
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
@@ -12,7 +15,7 @@ app.secret_key = 'QWErghuytrerTGHjuYTGFHyt'
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
+    password = db.Column(db.String(20), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     money = db.Column(db.Float)
     stocks = db.Column(db.String(120))
@@ -41,12 +44,43 @@ def index():
 def register():
     if (session.get('login_user')):
         return redirect(url_for('profile'))
+
+    def check_password(p):
+        if len(p) < 7:
+            return False
+        if len(p) > 20:
+            return False
+        digits = '1234567890'
+        found_int = False
+        for dig in digits:
+            if dig in p:
+                found_int = True
+                break
+        if not found_int:
+            return False
+        chars = 'qwertyuiopasdfghjklzxcvbnm'
+        found_char = False
+        for char in chars:
+            if char in p:
+                found_char = True
+                break
+        if not found_char:
+            return False
+        Chars = 'QWERTYUIOPASDFGHJKLZXCVBNM'
+        found_Char = False
+        for Char in Chars:
+            if Char in p:
+                found_Char = True
+                break
+        if not found_Char:
+            return False
+        return True
+
     if (request.method == 'POST'):
         username = request.form.get('username')
         password = request.form.get('password')
         repassword = request.form.get('repassword')
         email = request.form.get('email')
-
         check = False
         blank = False
         not_match = False
@@ -78,6 +112,7 @@ def register():
                     else:
                         session['ans'] = 'Existing username'
                 if user.email == email:
+                    check = True
                     if both and blank and not_match:
                         session['ans'] = "Unbelieveable! Password doesn't match AND existing username AND email AND you shouldn't leave anything blank"
                         break
@@ -94,16 +129,19 @@ def register():
                     elif not_match:
                         session['ans'] = "Existing email AND password doesn't match"
                     else:
-                        check = True
                         session['ans'] = 'Existing email'
         if check:
             return redirect(url_for('register'))
         else:
-            user = User(username = username, password = password, email = email, money = 0, stocks = '')
-            db.session.add(user)
-            db.session.commit()
-            session.pop('ans', None)
-            return redirect(url_for('login'))
+            if check_password(password):
+                user = User(username = username, password = password, email = email, money = 0, stocks = '')
+                db.session.add(user)
+                db.session.commit()
+                session.pop('ans', None)
+                return redirect(url_for('login'))
+            else:
+                session['ans'] = 'Password must include 7 ~ 20 elements, at least 1 number, 1 capital letter, and 1 lower-case letter'
+                return redirect(url_for('register'))
     return render_template('register.jinja')
 
 
@@ -120,6 +158,7 @@ def login():
         else:
             if (password == user[1]):
                 session['login_user'] = [user[0], user[2], user[3], user[4]]
+                # [name, email, money, stocks]
                 return redirect(url_for('profile'))
             else:
                 return render_template('login.jinja', message = 'Password does not match!')
@@ -131,14 +170,14 @@ def profile():
     if (not session.get('login_user')):
         return redirect(url_for('index'))
     user = User.query.filter_by(username = session.get('login_user')[0]).first()
-    session['login_user'] = [user.id, user.username, user.money, user.stocks]
+    session['login_user'] = [user.username, user.email, user.money, user.stocks]
     n = 0
-    message_2 = ''
+    message_2 = "You don't have any stock in hand"
     stocks_info = {}
+    stocks_check = ''
 
-    if not session.get('login_user')[3]:
-        message_2 = "You don't have any stock in hand"
-    else:
+    if session.get('login_user')[3]:
+        message_2 = ''
         x = session.get('login_user')[3].split('!@#$%')
         y = len(x) - 1
         n = int(y/2)
@@ -172,6 +211,8 @@ def profile():
                 return render_template('profile.jinja', message_3 = 'LNKD symbol must be 4 characters', n = n)
             else:
                 price = random.randint(1, 100)
+                session['stock_name'] = lnkd
+                session[session['stock_name']] = price
                 return render_template('profile.jinja', message_3 = 'Price for ' + str(lnkd) + ': ', message_3_1 = str(price), n = n)
 
         if request.form.get('buy'):
@@ -189,7 +230,15 @@ def profile():
                 return render_template('profile.jinja', message_4 = 'You are too poor to afford this investment', n = n)
             else:
                 shares_buy = float(shares_buy)
-                price = random.randint(1, 100)
+                try:
+                    if session['stock_name'] == lnkd_buy:
+                        price = session[session['stock_name']]
+                    else:
+                        price = random.randint(1, 100)
+                except:
+                    price = random.randint(1, 100)
+                session.pop(session['stock_name'], None)
+                session.pop('stock_name', None)
                 shares = shares_buy / price
                 user = User.query.filter_by(username = session.get('login_user')[0]).first()
                 user.money -= shares_buy
@@ -215,14 +264,16 @@ def profile():
                     db.session.commit()
                     session.get('login_user')[3] = user.stocks
                     n += 1
-                    session.get('stocks_name').append(lnkd_buy)
-                    session.get('stocks_shares').append(shares)
+                    session['stocks_name'].append(lnkd_buy)
+                    session['stocks_shares'].append(shares)
                     stocks_info[lnkd_buy] = float(shares)
                 return render_template('profile.jinja', message_4 = str(price), message_4_1 = str(shares), message_4_2 = str(lnkd_buy), n = n)
 
 
         elif request.form.get('exit'):
             session.pop('login_user', None)
+            session.pop('stocks_name', None)
+            session.pop('stocks_shares', None)
             return redirect(url_for('login'))
 
     return render_template('profile.jinja', message_2 = message_2, n = n)
