@@ -1,0 +1,36 @@
+{% extends 'base.jinja' %}
+
+{% block title %} Stock {% endblock %}
+
+
+{% block body %}
+    <center> <h1> Hi~ <i>{{user.username}}</i></h1> </center>
+    </br>
+
+    <p> The price of ticker named {{stock['TICKER']}} is <strong> {{stock['PRICE_BUY']}} $/Shares vs. {{stock['PRICE_SELL']}} $/Shares</strong> </p>
+
+    <form method = 'post'>
+        <div class="col-auto">
+            <input type="text" class="form-control" id="amount_trade" name = "amount_trade" placeholder="Enter # of shares you want to trade">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary btn-lg" name = 'buy' value = 'buy'> Buy </button>
+            &nbsp &nbsp
+            <button type="submit" class="btn btn-secondary btn-lg" name = 'sell' value = 'sell'> sell </button>
+        </div>
+    </form>
+
+    {% if message %}
+        <p style = 'color: red'> {{message}} </p>
+    {% endif %}
+
+    {% if message_buy %}
+        <p style = 'color: Green'> {{message_buy}} </p>
+    {% endif %}
+    
+    {% if message_sell %}
+        <p style = 'color: blue'> {{message_sell}} </p>
+    {% endif %}
+
+    
+{% endblock %}

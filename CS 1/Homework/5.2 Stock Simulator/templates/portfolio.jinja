@@ -1,0 +1,44 @@
+{% extends 'base.jinja' %}
+
+{% block title %} Portfolio {% endblock %}
+
+
+{% block body %}
+    <center> <h1> Hi~ <i>{{user.username}}</i></h1> </center>
+    </br>
+
+
+    <div class="card">
+        <h5 class="card-header"> Your Portfolio </h5>
+        <div class="card-body">
+            {% if message_2 %}
+                <h5 class="card-title" style = 'color: grey'> {{message_2}}</h5>
+                </br></br>
+            {% else %} 
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Ticker</th>
+                        <th scope="col">Number of Shares</th>
+                        <th scope='col'>Access</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for stock,amount in stocks.items() %}
+                            <tr>
+                            <td>{{loop.index}}</td>
+                            <td>{{stock}}</td>
+                            <td>{{amount}}</td>
+                            <td> <a href = "/stock/{{stock}}" class="btn btn-light" > View </a> </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            {% endif %} 
+        </div>
+    </div>
+
+    
+{% endblock %}

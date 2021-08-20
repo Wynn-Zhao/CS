@@ -1,0 +1,10 @@
+{{student.id}}: {{student.name}} ({{student.yob}})
+
+
+<form method = "post">
+    {% csrf_token %}
+    <input type = "text" name = "name" value = "{{student.name}}">
+
+    <input type = "number" name = "yob" value = "{{student.yob}}">
+    <input type = "submit">
+</form>

@@ -1,0 +1,48 @@
+{% extends 'base.jinja' %}
+
+{% block title %} Find Stock {% endblock %}
+
+
+{% block body %}
+    <center> <h1> Hi~ <i>{{user.username}}</i></h1> </center>
+    </br>
+
+    <div class="card">
+        <h5 class="card-header"> Search for Stock </h5>
+        <div class="card-body">
+            <h5 class="card-title"> 
+                Enter ticker to get the basic info of a stock 
+            </h5>
+            <p class="card-text"> Have fun ~ </p>
+            <form class="row g-2" method = 'post'>
+                <div class="col-auto">
+                    <input type="text" class="form-control" id="find_ticker" name = "find_ticker" placeholder="Please enter the ticker">
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary mb-3" name = "search" value = "search"> Search </button>
+                </div>
+            </form>
+
+            {% if message == 'not_exist' %}
+                <p style = 'color: red'> The ticker you entered doesn't exist </p>
+            {% endif %}
+
+            {% if info %}
+                <table class="table" style = 'color: blue'>
+                    <tbody>
+                        {% for name in info %}
+                            <tr>
+                            <td>{{loop.index}}</td>
+                            <td>{{name}}</td>
+                            <td>{{info[name]}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+            
+        </div>
+    </div>
+
+    
+{% endblock %}

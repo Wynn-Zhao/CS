@@ -1,0 +1,47 @@
+<title> Change Info </title>
+
+<body>
+    <center>
+        <h1> You can change any of your information </h1>
+        <form method = 'post'>
+            {% csrf_token %}
+            <p> 
+                Firstname: 
+                <input type = 'text' name = 'firstname' placeholder = '{{self.firstname}}'> 
+                <input type = 'submit' name = 'change_firstname'>
+            </p>
+        </form>
+
+        <form method = 'post'>
+            {% csrf_token %}
+            <p>
+                Lastname:
+                <input type = 'text' name = 'lastname' placeholder = '{{self.lastname}}'>
+                <input type = 'submit' name = 'change_lastname'>
+            </p>
+        </form>
+
+        <form method = 'post'>
+        {% csrf_token %}
+            <p>
+                Password:
+                <input type = 'text' name = 'password' placeholder = '{{self.password}}'>
+                <input type = 'submit' name = 'change_password'>
+            </p>
+        </form>
+
+        <form method = 'post'>
+        {% csrf_token %}
+            <p>
+                Country:
+                <input type = 'text' name = 'origin_country' placeholder = '{{self.origin_country}}'>
+                <input type = 'submit' name = 'change_origin_country'>
+            </p>
+        </form>
+        
+        <p style = 'color: red'> {{message}} </p>
+    </center>
+
+    
+
+</body>

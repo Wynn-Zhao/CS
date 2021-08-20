@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <title> Accounts </title>
+    </head>
+    <body>
+        <ul>
+            {% for user in users %}
+                <li> <a href = "{% url 'get_username' user.username %}">{{user}}</a>: {{user.password}} </li>
+
+                
+            {% endfor %}
+        </ul>
+
+    </body>
+</html>

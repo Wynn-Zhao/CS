@@ -1,0 +1,16 @@
+<title> Delete </title>
+
+<body>
+    <form method = 'post'>
+        {% csrf_token %}
+        <center>
+            <h1 style = "color: Red"> You sure you want to delete your account? <h1>
+            <p>
+                <input type = 'submit' name = 'sure' value = "I am sure">
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                <input type = 'submit' name = 'regret' value = 'I regret'>
+            </p>
+
+        </center>
+    </form>
+</body>

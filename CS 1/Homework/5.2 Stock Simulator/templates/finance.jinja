@@ -1,0 +1,37 @@
+{% extends 'base.jinja' %}
+
+{% block title %} Finance {% endblock %}
+
+
+{% block body %}
+    <center> <h1> Hi~ <i>{{user.username}}</i></h1> </center>
+    </br>
+
+    <div class="card">
+        <h5 class="card-header"> Finance </h5>
+        <div class="card-body">
+            <h5 class="card-title"> 
+                Your account has <strong> {{user.money}}$ </strong> money 
+            </h5>
+            <p class="card-text"> Enter Positive amount of money to Deposite, and Negative to Withdraw </p>
+            <form class="row g-2" method = 'post'>
+                <div class="col-auto">
+                    <label for="inputPassword2" class="visually-hidden"> Amount of money </label>
+                    <input type="text" class="form-control" id="amount_change" name = "amount_change" placeholder="Please enter a number">
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary mb-3" name = "change" value = "change"> Make Change </button>
+                </div>
+            </form>
+            {% if message_1 %}
+                <p style = 'color: red'> {{message_1}} </p>
+            {% endif %} 
+
+            {% if message_2 %}
+                <p style = 'color: green'> {{message_2}} </p>
+            {% endif %} 
+        </div>
+    </div>
+
+    
+{% endblock %}

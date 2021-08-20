@@ -1,0 +1,18 @@
+<title> Index </title>
+
+<body>
+    <h1> Index Page </h1>
+
+    {% if not request.session.login_user %}
+        <center>
+            <p> add 'register/' to the current link to register new account </p>
+            <p> add 'login/' to the current link to login to existing account </p>
+        </center>
+    {% else %}
+            <p> add 'dashboard/' to the current link to view all registered students </p>
+            <p> add "'your-firstname'/change" to the current link to change your registered information </p>
+            <p> add 'exit/' to the current link to exit </p>
+            <p> add 'delete_account/' to the current link to delete your registered account </p>
+            <p> add 'delete/all' to the current link to clear the database </p>
+    {% endif %}
+</body>
